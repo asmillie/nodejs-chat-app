@@ -1,9 +1,10 @@
 const express = require('express')
+const path = require('path')
 
 const app = express()
 
-app.get('/', (req, res) => {
-    res.send('Index.js')
-})
+const PUBLIC_PATH = path.join(__dirname, '../public/')
+
+app.use(express.static(PUBLIC_PATH))
 
 module.exports = app
