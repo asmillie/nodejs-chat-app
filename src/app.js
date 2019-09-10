@@ -11,8 +11,14 @@ const PUBLIC_PATH = path.join(__dirname, '../public/')
 
 app.use(express.static(PUBLIC_PATH))
 
-io.on('connection', () => {
+io.on('connection', (socket) => {
     console.log('New web socket connection')
+
+    socket.emit('message', 'Welcome!')
+
+    socket.on('sendMessage', (message) => {
+        io.emit('message', message)
+    })
 })
 
 module.exports = server

@@ -11,8 +11,33 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <div class="container-fluid">
-      <h1>Hello, world!</h1>
+    <div class="container">
+      <h1 class="my-3">Chat App</h1>
+      <div class="row">
+        <div class="col">
+
+          <form id="messageForm">
+            <div class="form-row">
+              <div class="col">
+                  <input type="text" class="form-control form-control-lg" id="message" placeholder="Enter Message">
+              </div>
+              <div class="col">
+                <button type="submit" class="btn btn-lg btn-primary" id="sendBtn">Send</button>
+              </div>
+            </div>            
+          </form>
+
+        </div>
+      </div>
+      
+      <h3 class="mt-3">Messages</h3>
+      <div class="row">
+        <div class="col" id="messageContainer">
+          
+        </div>        
+      </div>
+      
+
     </div>    
 
     <!-- Socket.io -->
