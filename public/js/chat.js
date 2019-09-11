@@ -1,27 +1,52 @@
 const socket = io()
 
-const msgContainer = document.querySelector('#messageContainer')
+// Elements
+const $messageForm = document.querySelector('#messageForm')
+const $messageInput = document.querySelector('#message')
+const $sendBtn = document.querySelector('#sendBtn')
+const $shareLocationBtn = document.querySelector('#shareLocationBtn')
+
+const $msgContainer = document.querySelector('#messageContainer')
 socket.on('message', (msg) => {
-    msgContainer.insertAdjacentHTML('beforeend', `<p>${msg}</p>`)
+    $msgContainer.insertAdjacentHTML('beforeend', `<p>${msg}</p>`)
 })
 
-document.querySelector('#messageForm').addEventListener('submit', (e) => {
+$messageForm.addEventListener('submit', (e) => {
     e.preventDefault()
+
+    $sendBtn.setAttribute('disabled', 'disabled')
+
     const message = e.target.elements.message
-    socket.emit('sendMessage', message.value)
-    message.value = ''
+    socket.emit('sendMessage', message.value, (error) => {
+        $sendBtn.removeAttribute('disabled')
+        $messageInput.value = ''
+        $messageInput.focus()
+
+        if (error) {
+            return console.log(error)
+        }
+
+        console.log('Message Delivered')
+    })
 })
 
-document.querySelector('#shareLocationBtn').addEventListener('click', (e) => {
+$shareLocationBtn.addEventListener('click', (e) => { 
+
     if (!navigator.geolocation) {
         return alert('Geolocation not supported by current browser.');
     }
 
+    $shareLocationBtn.setAttribute('disabled','disabled')
+
     navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position)
-        socket.emit('sendLocation', {
+        const coords = {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
+        }
+
+        socket.emit('sendLocation', coords, () => {
+            console.log('Location shared')
+            $shareLocationBtn.removeAttribute('disabled')
         })
     })
 })
