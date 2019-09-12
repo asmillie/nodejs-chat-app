@@ -3,7 +3,7 @@ const http = require('http')
 const path = require('path')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
-const { generateMessage } = require('../src/utils/message.utils')
+const { generateMessage, locationMessage } = require('../src/utils/message.utils')
 
 const app = express()
 const server = http.createServer(app)
@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sendLocation', (location, callback) => {
-        io.emit('locationMessage', `https://google.com/maps?q=${location.latitude},${location.longitude}`)
+        io.emit('locationMessage', locationMessage(location))
         callback()
     })
 

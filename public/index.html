@@ -47,7 +47,10 @@
 
       <script id="location-template" type="text/html">
         <div>
-          <p>A user has shared their location: <a href="{{ locationHtml }}" target="_blank">{{ locationText }}</a></p>
+          <p>
+            <span class="text-muted">[{{ timestamp }}]:</span>
+            <i>A user has shared their location: <a href="{{ locationHtml }}" target="_blank">{{ locationText }}</a></i>
+          </p>
         </div>
       </script>      
 
