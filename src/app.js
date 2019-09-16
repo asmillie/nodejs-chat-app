@@ -17,9 +17,12 @@ app.use(express.static(PUBLIC_PATH))
 io.on('connection', (socket) => {
     console.log('New web socket connection')
 
-    socket.emit('message', generateMessage('Welcome to chat app'))
+    socket.on('join', ({ name, room }) => {
+        socket.join(room)
 
-    socket.broadcast.emit('message', generateMessage('User has joined'))
+        socket.emit('message', generateMessage('Welcome to chat app'))
+        socket.broadcast.to(room).emit('message', generateMessage(`${name} has joined`))
+    })
 
     socket.on('sendMessage', (message, callback) => {
         const filter = new Filter()
@@ -28,7 +31,7 @@ io.on('connection', (socket) => {
             return callback('Profanity not allowed')
         }
 
-        io.emit('message', generateMessage(message))
+        io.to('WaltonChat').emit('message', generateMessage(message))
         callback()
     })
 
