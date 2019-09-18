@@ -6,10 +6,12 @@ const $messageInput = document.querySelector('#message')
 const $sendBtn = document.querySelector('#sendBtn')
 const $shareLocationBtn = document.querySelector('#shareLocationBtn')
 const $msgContainer = document.querySelector('#messageContainer')
+const $userListContainer = document.querySelector('#userListContainer')
 
 // Templates
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationTemplate = document.querySelector('#location-template').innerHTML
+const userListTemplate = document.querySelector('#userList-template').innerHTML
 
 // Options
 const { name, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
@@ -31,6 +33,12 @@ socket.on('locationMessage', ({ name, url, createdAt }) => {
         locationText: 'View Location'
     })
     $msgContainer.insertAdjacentHTML('beforeend', content)
+})
+
+socket.on('onRoomChange', (data) => {
+    const content = Mustache.render(userListTemplate, data)
+    $userListContainer.innerHTML = ''
+    $userListContainer.insertAdjacentHTML('beforeend', content)
 })
 
 $messageForm.addEventListener('submit', (e) => {
