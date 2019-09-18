@@ -44,15 +44,22 @@
     <!-- Mustache Templates -->
     <script id="message-template" type="text/html">
       <div>
-        <p><span class="text-muted">[{{ timestamp }}]:</span> {{ message }}</p>
+        <p>
+            <strong>{{ name }}</strong>
+            <span class="text-muted"><small>{{ timestamp }}</small></span>
+            <br />
+            {{ message }}
+          </p>
       </div>
     </script>
 
     <script id="location-template" type="text/html">
       <div>
         <p>
-          <span class="text-muted">[{{ timestamp }}]:</span>
-          <i>A user has shared their location: <a href="{{ locationHtml }}" target="_blank">{{ locationText }}</a></i>
+          <strong>{{ name }}</strong>
+          <span class="text-muted"><small>{{ timestamp }}</small></span>
+          <br />
+          <em><a href="{{ locationHtml }}" target="_blank">{{ locationText }}</a></em>
         </p>
       </div>
     </script>    
