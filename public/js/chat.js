@@ -16,6 +16,10 @@ const userListTemplate = document.querySelector('#userList-template').innerHTML
 // Options
 const { name, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
+const autoscroll = () => {
+
+}
+
 socket.on('message', ({ name, text, createdAt }) => {
     const content = Mustache.render(messageTemplate, {
         name,
@@ -23,6 +27,7 @@ socket.on('message', ({ name, text, createdAt }) => {
         timestamp: moment(createdAt).format('hh:mm A')
     })
     $msgContainer.insertAdjacentHTML('beforeend', content)
+    autoscroll()
 })
 
 socket.on('locationMessage', ({ name, url, createdAt }) => {
@@ -33,6 +38,7 @@ socket.on('locationMessage', ({ name, url, createdAt }) => {
         locationText: 'View Location'
     })
     $msgContainer.insertAdjacentHTML('beforeend', content)
+    autoscroll()
 })
 
 socket.on('onRoomChange', (data) => {

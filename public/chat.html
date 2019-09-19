@@ -9,48 +9,43 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
 
-    <title>Hello, world!</title>
+    <link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet">
+
+    <title>Chat App</title>
   </head>
   <body class="bg-dark">
-    <div class="container bg-white shadow-sm pb-2">
-        <h1 class="my-3">Chat App</h1>      
-
-        <div class="row">
-          <div class="col-4">
+    <div class="container bg-white shadow h-75 rounded" style="position:relative;top:10%">
+        <div class="row h-100">
+          <div class="col-4 bg-secondary text-white pt-1">
             <!-- User List -->
-            <h3 class="mt-3">Users</h3>
-            <div class="border p-2" id="userListContainer">
+            <div id="userListContainer">
 
             </div>
           </div>
-          <div class="col">
-            <!-- Messages -->
-            <h3 class="mt-3">Messages</h3>
-            <div class="border p-2" id="messageContainer">
-              
-            </div> 
+          <div class="col shadow pt-1 d-flex flex-column">
+            <div class="flex-grow-1">
+              <div id="messageContainer"></div>
+            </div>
+            <div class="pb-2">
+              <form id="messageForm">
+                  <div class="form-row align-items-left">
+                    <div class="col">
+                        <input type="text" class="form-control" name="message" id="message" placeholder="Enter Message" required autocomplete="off">
+                    </div>
+                    <div class="col-auto">
+                      <button type="submit" class="btn btn-primary" id="sendBtn">Send</button>
+                    </div>
+                    <div class="col-auto">
+                      <button class="btn btn-secondary" id="shareLocationBtn">Share Location</button>
+                    </div>
+                  </div>            
+                </form>
+            </div>
+             
           </div>
         </div>
         
     </div>
-
-    <footer class="fixed-bottom bg-white">
-      <div class="container my-3">
-        <form id="messageForm">
-          <div class="form-row align-items-left">
-            <div class="col-6">
-                <input type="text" class="form-control form-control-lg" name="message" id="message" placeholder="Enter Message" required autocomplete="off">
-            </div>
-            <div class="col-auto">
-              <button type="submit" class="btn btn-lg btn-primary" id="sendBtn">Send</button>
-            </div>
-            <div class="col-auto">
-              <button class="btn btn-lg btn-secondary" id="shareLocationBtn">Share Location</button>
-            </div>
-          </div>            
-        </form> 
-      </div>       
-    </footer>
 
     <!-- Mustache Templates -->
     <script id="message-template" type="text/html">
@@ -76,11 +71,11 @@
     </script>  
     
     <script id="userList-template" type="text/html">
-      <div>
+      <div class="rounded-left">
         <h4>{{ room }}</h4>
-        <ul class="list-group">
+        <ul class="list-group list-group-flush bg-secondary">
           {{ #users }}
-            <li class="list-group-item">{{ name }}</li>
+            <li class="list-group-item bg-secondary">{{ name }}</li>
           {{ /users }}
         </ul>
       </div>
