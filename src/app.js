@@ -21,8 +21,7 @@ const PUBLIC_PATH = path.join(__dirname, '../public/')
 app.use(express.static(PUBLIC_PATH))
 
 io.on('connection', (socket) => {
-    console.log('New web socket connection')
-
+    
     socket.on('join', (options, callback) => {
         const { error, user } = addUser({ id: socket.id, ...options })
 
