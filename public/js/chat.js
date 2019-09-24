@@ -17,7 +17,30 @@ const userListTemplate = document.querySelector('#userList-template').innerHTML
 const { name, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
 const autoscroll = () => {
+    console.log('Autoscroll init')
+    // Get newest message element
+    const $newMsg = $msgContainer.lastElementChild
+    // Get total height of new message
+    const newMsgStyles = getComputedStyle($newMsg)
+    const newMsgMargin = parseInt(newMsgStyles.marginBottom)
+    const newMsgHeight = $newMsg.offsetHeight + newMsgMargin
+    console.log(`New Message Height: ${newMsgHeight}`)
 
+    // Visible height
+    const visibleHeight = $msgContainer.offsetHeight
+    console.log(`Visible Height: ${visibleHeight}`)
+
+    // Height of messages container
+    const containerHeight = $msgContainer.scrollHeight
+    console.log(`Message Container Height: ${containerHeight}`)
+
+    // Scroll distance
+    const scrollOffset = $msgContainer.scrollTop + visibleHeight
+    console.log(`Scroll Distance: ${scrollOffset}`)
+
+    if (containerHeight - newMsgHeight <= scrollOffset) {
+        $msgContainer.scrollTop = $msgContainer.scrollHeight
+    }
 }
 
 socket.on('message', ({ name, text, createdAt }) => {
@@ -61,8 +84,6 @@ $messageForm.addEventListener('submit', (e) => {
         if (error) {
             return console.log(error)
         }
-
-        console.log('Message Delivered')
     })
 })
 
@@ -81,7 +102,6 @@ $shareLocationBtn.addEventListener('click', (e) => {
         }
 
         socket.emit('sendLocation', coords, () => {
-            console.log('Location shared')
             $shareLocationBtn.removeAttribute('disabled')
         })
     })

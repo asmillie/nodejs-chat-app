@@ -14,19 +14,15 @@
     <title>Chat App</title>
   </head>
   <body class="bg-dark">
-    <div class="container bg-white shadow h-75 rounded" style="position:relative;top:10%">
+    <div class="container bg-white shadow rounded" style="position:relative;top:10%">
         <div class="row h-100">
           <div class="col-4 bg-secondary text-white pt-1">
             <!-- User List -->
-            <div id="userListContainer">
-
-            </div>
+            <div id="userListContainer"></div>
           </div>
-          <div class="col shadow pt-1 d-flex flex-column">
-            <div class="flex-grow-1">
-              <div id="messageContainer"></div>
-            </div>
-            <div class="pb-2">
+          <div class="col shadow pt-1">
+            <div id="messageContainer" style="height:600px;overflow-y:scroll;"></div>            
+            <div class="py-2">
               <form id="messageForm">
                   <div class="form-row align-items-left">
                     <div class="col">
@@ -49,36 +45,30 @@
 
     <!-- Mustache Templates -->
     <script id="message-template" type="text/html">
-      <div>
         <p>
-            <strong>{{ name }}</strong>
-            <span class="text-muted"><small>{{ timestamp }}</small></span>
-            <br />
-            {{ message }}
-          </p>
-      </div>
+          <strong>{{ name }}</strong>
+          <span class="text-muted"><small>{{ timestamp }}</small></span>
+          <br />
+          {{ message }}
+        </p>
     </script>
 
     <script id="location-template" type="text/html">
-      <div>
         <p>
           <strong>{{ name }}</strong>
           <span class="text-muted"><small>{{ timestamp }}</small></span>
           <br />
           <em><a href="{{ locationHtml }}" target="_blank">{{ locationText }}</a></em>
         </p>
-      </div>
     </script>  
     
     <script id="userList-template" type="text/html">
-      <div class="rounded-left">
         <h4>{{ room }}</h4>
         <ul class="list-group list-group-flush bg-secondary">
           {{ #users }}
             <li class="list-group-item bg-secondary">{{ name }}</li>
           {{ /users }}
         </ul>
-      </div>
     </script>
 
     <!-- Socket.io -->
